@@ -17,6 +17,8 @@ output:
 
 ```{r libraries}
 library(tidyverse)     # for graphing and data cleaning
+library(remotes)        # for installing package from GitHub
+#remotes::install_github("llendway/gardenR") # run if package is not already installed
 library(gardenR)       # for Lisa's garden data
 library(lubridate)     # for date manipulation
 library(ggthemes)      # for even more plotting themes
@@ -81,21 +83,58 @@ These exercises will reiterate what you learned in the "Expanding the data wrang
   1. Summarize the `garden_harvest` data to find the total harvest weight in pounds for each vegetable and day of week (HINT: use the `wday()` function from `lubridate`). Display the results so that the vegetables are rows but the days of the week are columns.
 
 ```{r}
+garden_harvest %>% 
+  group_by(vegetable, date, weight) %>%
+  summarise(weight_lbs = weight * 0.00220462) %>% 
+  select(-weight) %>% 
+  mutate(day_week = wday(date)) %>% 
+  group_by(vegetable, day_week) %>% 
+  summarise(total_harvest_lbs = sum(weight_lbs)) %>% 
+  arrange(day_week) %>% 
+  pivot_wider(id_cols = vegetable,
+              names_from = day_week,
+              values_from = total_harvest_lbs)
+  
 
 ```
 
   2. Summarize the `garden_harvest` data to find the total harvest in pound for each vegetable variety and then try adding the plot from the `garden_planting` table. This will not turn out perfectly. What is the problem? How might you fix it?
 
 ```{r}
-
+garden_harvest %>% 
+  group_by(vegetable, variety, weight) %>% 
+  summarise(weight_lbs = weight * 0.00220462) %>% 
+  group_by(variety) %>% 
+  summarise(total_harvest_lbs = sum(weight_lbs)) %>% 
+  left_join(garden_planting)
 ```
 
+It looks like there are some missing values in the plot column. Also, some of the values say things like "front" rather than a single plot letter.
+ 
+ 
   3. I would like to understand how much money I "saved" by gardening, for each vegetable type. Describe how I could use the `garden_harvest` and `garden_spending` datasets, along with data from somewhere like [this](https://products.wholefoodsmarket.com/search?sort=relevance&store=10542) to answer this question. You can answer this in words, referencing various join functions. You don't need R code but could provide some if it's helpful.
+  
+You could join the two datasets by the matching columns of vegetable and variety. I still don't entirely understand the difference between a left and right join and which variables are kept. To make sure all the data is available, maybe I'd do a full join. I would calculate how much you spent on each vegetable per weight in pounds harvested. This would require summarizing weight in grams to weight in pounds and then taking cost and dividing it by weight. These numbers could be directly compared to the price of produce (per pound) at a store such as Whole Foods. Whatever the difference between store price and garden price is is how much you saved by gardening the food yourself.
+  
 
   4. Subset the data to tomatoes. Reorder the tomato varieties from smallest to largest first harvest date. Create a barplot of total harvest in pounds for each variety, in the new order.CHALLENGE: add the date near the end of the bar. (This is probably not a super useful graph because it's difficult to read. This is more an exercise in using some of the functions you just learned.)
 
 ```{r}
+garden_harvest %>% 
+  filter(vegetable == "tomatoes") %>% 
+  group_by(variety) %>% 
+  summarise(min_date = min(date)) 
+  
 
+garden_harvest %>% 
+  filter(vegetable == "tomatoes") %>% 
+  group_by(variety, date) %>% 
+  summarise(weight_lbs = weight * 0.00220462,
+            total_harvest_lbs = sum(weight_lbs)) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = total_harvest_lbs, y = fct_reorder(variety, date, min, .desc = TRUE))) +
+  geom_col()
+  
 ```
 
   5. In the `garden_harvest` data, create two new variables: one that makes the varieties lowercase and another that finds the length of the variety name. Arrange the data by vegetable and length of variety name (smallest to largest), with one row for each vegetable variety. HINT: use `str_to_lower()`, `str_length()`, and `distinct()`.
@@ -242,6 +281,10 @@ This problem uses the data from the Tidy Tuesday competition this week, `kids`. 
 
   21. In this exercise, you are going to try to replicate the graph below, created by Georgios Karamanis. I'm sure you can find the exact code on GitHub somewhere, but **DON'T DO THAT!** You will only be graded for putting an effort into this problem. So, give it a try and see how far you can get without doing too much googling. HINT: use `facet_geo()`. The graphic won't load below since it came from a location on my computer. So, you'll have to reference the original html on the moodle page to see it.
   
-![](kids_data_karamanis.jpeg)
+
+```{r}
+#![](kids_data_karamanis.jpeg)
+# not supposed to be in code chunk. move out later.
+```
 
 **DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?**
