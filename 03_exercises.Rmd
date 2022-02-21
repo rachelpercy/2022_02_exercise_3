@@ -239,14 +239,36 @@ The variable `client` describes whether the renter is a regular user (level `Reg
   11. Change the graph from exercise 10 to set the `fill` aesthetic for `geom_density()` to the `client` variable. You should also set `alpha = .5` for transparency and `color=NA` to suppress the outline of the density function.
   
 ```{r}
-
+Trips %>% 
+  mutate(hr_day = hour(sdate),
+         min_day = ((minute(sdate))/60),
+         hr_min = hr_day + min_day,
+         day_of_week = wday(sdate)) %>% 
+  ggplot(aes(x = hr_min)) +
+  geom_density(mapping = aes(fill = client), 
+               alpha = 0.5, 
+               color = NA) +
+  facet_wrap(~ day_of_week)
 ```
 
   12. Change the previous graph by adding the argument `position = position_stack()` to `geom_density()`. In your opinion, is this better or worse in terms of telling a story? What are the advantages/disadvantages of each?
   
 ```{r}
-
+Trips %>% 
+  mutate(hr_day = hour(sdate),
+         min_day = ((minute(sdate))/60),
+         hr_min = hr_day + min_day,
+         day_of_week = wday(sdate)) %>% 
+  ggplot(aes(x = hr_min)) +
+  geom_density(mapping = aes(fill = client), 
+               alpha = 0.5, 
+               color = NA, 
+               position = position_stack()) +
+  facet_wrap(~ day_of_week)
 ```
+  
+I prefer the non-stack positioning. One advantage is that you can see better when casual riders and registered riders are overlapping. This is helpful if you want to know the patterns of each client. One disadvantage is that the overlapping of colors can make the graph a bit harder to read. One advantage of the stacked graphs is that it is easier to tell what proportion of riders at a certain time are casual versus registered. A disadvantage is that it's hard to tell when the proportion of casual versus registered riders is the same. 
+  
   
   13. In this graph, go back to using the regular density plot (without `position = position_stack()`). Add a new variable to the dataset called `weekend` which will be "weekend" if the day is Saturday or Sunday and  "weekday" otherwise (HINT: use the `ifelse()` function and the `wday()` function from `lubridate`). Then, update the graph from the previous problem by faceting on the new `weekend` variable. 
   
