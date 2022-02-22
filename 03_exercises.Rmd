@@ -87,7 +87,7 @@ garden_harvest %>%
   group_by(vegetable, date, weight) %>%
   summarise(weight_lbs = weight * 0.00220462) %>% 
   select(-weight) %>% 
-  mutate(day_week = wday(date)) %>% 
+  mutate(day_week = wday(date, label = TRUE)) %>% 
   group_by(vegetable, day_week) %>% 
   summarise(total_harvest_lbs = sum(weight_lbs)) %>% 
   arrange(day_week) %>% 
@@ -195,7 +195,9 @@ It's natural to expect that bikes are rented more at some times of day, some day
 ```{r}
 Trips %>% 
   ggplot(aes(x = sdate)) +
-  geom_density()
+  geom_density(fill = "violet") +
+  labs(x = "", y = "", title = "Density of Bike Ridership Over Time of Year") +
+  theme(axis.text.y = element_blank())
 ```
   
   8. A density plot of the events versus time of day.  You can use `mutate()` with `lubridate`'s  `hour()` and `minute()` functions to extract the hour of the day and minute within the hour from `sdate`. Hint: A minute is 1/60 of an hour, so create a variable where 3:30 is 3.5 and 3:45 is 3.75.
@@ -206,16 +208,19 @@ Trips %>%
          min_day = ((minute(sdate))/60),
          hr_min = hr_day + min_day) %>% 
   ggplot(aes(x = hr_min)) +
-  geom_density()
+  geom_density(fill = "violet") + 
+  labs(x = "", y = "", title = "Density of Bike Ridership Over Time of Day") +
+  theme(axis.text.y = element_blank())
 ```
   
   9. A bar graph of the events versus day of the week. Put day on the y-axis.
   
 ```{r}
 Trips %>% 
-  mutate(day_of_week = wday(sdate)) %>% 
-  ggplot(aes(y = day_of_week)) +
-  geom_bar()
+  mutate(day_of_week = wday(sdate, label = TRUE)) %>% 
+  ggplot(aes(y = fct_rev(day_of_week))) +
+  geom_bar(fill = "violet") +
+  labs(x = "", y = "", title = "Total Bike Ridership Over the Week")
 ```
   
   10. Facet your graph from exercise 8. by day of the week. Is there a pattern?
@@ -225,10 +230,11 @@ Trips %>%
   mutate(hr_day = hour(sdate),
          min_day = ((minute(sdate))/60),
          hr_min = hr_day + min_day,
-         day_of_week = wday(sdate)) %>% 
+         day_of_week = wday(sdate, label = TRUE)) %>% 
   ggplot(aes(x = hr_min)) +
-  geom_density() +
-  facet_wrap(~ day_of_week)
+  geom_density(fill = "violet") +
+  facet_wrap(~ day_of_week) +
+  labs(x = "Time of Day", y = "", title = "Density of Bike Ridership During the Day for Different Days of the Week")
 ```
 
 Yes, it looks like on weekdays there are two peaks in bike ridership. These peaks correspond with rush hour to and from work. On the weekends, there is only one peak and that is mostly in the afternoon. Perhaps people are enjoying sleeping in on the weekends and that is why we don't see bike ridership peak in the mornings on weekends. 
@@ -273,14 +279,37 @@ I prefer the non-stack positioning. One advantage is that you can see better whe
   13. In this graph, go back to using the regular density plot (without `position = position_stack()`). Add a new variable to the dataset called `weekend` which will be "weekend" if the day is Saturday or Sunday and  "weekday" otherwise (HINT: use the `ifelse()` function and the `wday()` function from `lubridate`). Then, update the graph from the previous problem by faceting on the new `weekend` variable. 
   
 ```{r}
-
+Trips %>% 
+  mutate(hr_day = hour(sdate),
+         min_day = ((minute(sdate))/60),
+         hr_min = hr_day + min_day,
+         day_of_week = wday(sdate),
+         weekend = ifelse(day_of_week == 1 | day_of_week == 7, "weekend", "weekday")) %>% 
+  ggplot(aes(x = hr_min)) +
+  geom_density(mapping = aes(fill = client), 
+               alpha = 0.5, 
+               color = NA) +
+  facet_wrap(~ weekend)
+  
 ```
   
   14. Change the graph from the previous problem to facet on `client` and fill with `weekday`. What information does this graph tell you that the previous didn't? Is one graph better than the other?
   
 ```{r}
-
+Trips %>% 
+  mutate(hr_day = hour(sdate),
+         min_day = ((minute(sdate))/60),
+         hr_min = hr_day + min_day,
+         day_of_week = wday(sdate),
+         weekend = ifelse(day_of_week == 1 | day_of_week == 7, "weekend", "weekday")) %>% 
+  ggplot(aes(x = hr_min)) +
+  geom_density(mapping = aes(fill = weekend), 
+               alpha = 0.5, 
+               color = NA) +
+  facet_wrap(~ client)
 ```
+  
+This graph is useful if your main focus in understanding how casual versus registered riders differ in their weekday versus weekend bike usage. The big takeaways from this graph is that casual riders use bikes during mid-day regardless if it is a weekday or a weekend. That would help an organization know how to best cater to the casual ridership, such as ensuring that any broken bikes are fixed by around 10 am. Personally, I prefer the graphs faceted by weekday/weekend because it is easier to see total ridership for a time of day.   
   
 ### Spatial patterns
 
