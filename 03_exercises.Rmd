@@ -179,7 +179,7 @@ Here is the code to read in the data. We do this a little differently than usual
 
 ```{r cache=TRUE}
 data_site <- 
-  "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data-Small.rds" 
+  "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data.rds" 
 Trips <- readRDS(gzcon(url(data_site)))
 Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv")
 ```
@@ -249,7 +249,7 @@ Trips %>%
   mutate(hr_day = hour(sdate),
          min_day = ((minute(sdate))/60),
          hr_min = hr_day + min_day,
-         day_of_week = wday(sdate)) %>% 
+         day_of_week = wday(sdate, label = TRUE)) %>% 
   ggplot(aes(x = hr_min)) +
   geom_density(mapping = aes(fill = client), 
                alpha = 0.5, 
@@ -264,7 +264,7 @@ Trips %>%
   mutate(hr_day = hour(sdate),
          min_day = ((minute(sdate))/60),
          hr_min = hr_day + min_day,
-         day_of_week = wday(sdate)) %>% 
+         day_of_week = wday(sdate, label = TRUE)) %>% 
   ggplot(aes(x = hr_min)) +
   geom_density(mapping = aes(fill = client), 
                alpha = 0.5, 
@@ -316,13 +316,13 @@ This graph is useful if your main focus in understanding how casual versus regis
   15. Use the latitude and longitude variables in `Stations` to make a visualization of the total number of departures from each station in the `Trips` data. Use either color or size to show the variation in number of departures. We will improve this plot next week when we learn about maps!
   
 ```{r}
-
+# not sure how to do this. my guess is that i need to group by "sstation" in the trips dataset, then join the 2 datasets by the station name. then use lat and long to graph them
 ```
   
   16. Only 14.4% of the trips in our data are carried out by casual users. Create a plot that shows which area(s) have stations with a much higher percentage of departures by casual users. What patterns do you notice? (Again, we'll improve this next week when we learn about maps).
   
 ```{r}
-
+# using the same code from above, would I then group_by client?
 ```
   
 **DID YOU REMEMBER TO GO BACK AND CHANGE THIS SET OF EXERCISES TO THE LARGER DATASET? IF NOT, DO THAT NOW.**
