@@ -1,6 +1,6 @@
 ---
 title: 'Weekly Exercises #3'
-author: "Put your name here"
+author: "RACHEL PERCY"
 output: 
   html_document:
     keep_md: TRUE
@@ -16,44 +16,10 @@ output:
 
 ```r
 library(tidyverse)     # for graphing and data cleaning
-```
-
-```
-## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
-```
-
-```
-## v ggplot2 3.3.5     v purrr   0.3.4
-## v tibble  3.1.6     v dplyr   1.0.8
-## v tidyr   1.2.0     v stringr 1.4.0
-## v readr   2.1.2     v forcats 0.5.1
-```
-
-```
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-```
-
-```r
 library(remotes)        # for installing package from GitHub
 #remotes::install_github("llendway/gardenR") # run if package is not already installed
 library(gardenR)       # for Lisa's garden data
 library(lubridate)     # for date manipulation
-```
-
-```
-## 
-## Attaching package: 'lubridate'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     date, intersect, setdiff, union
-```
-
-```r
 library(ggthemes)      # for even more plotting themes
 library(geofacet)      # for special faceting with US map layout
 theme_set(theme_minimal())       # My favorite ggplot() theme :)
@@ -72,62 +38,11 @@ data("garden_planting")
 
 # Tidy Tuesday dog breed data
 breed_traits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-01/breed_traits.csv')
-```
-
-```
-## Rows: 195 Columns: 17
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr  (3): Breed, Coat Type, Coat Length
-## dbl (14): Affectionate With Family, Good With Young Children, Good With Othe...
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
-```
-
-```r
 trait_description <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-01/trait_description.csv')
-```
-
-```
-## Rows: 16 Columns: 4
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr (4): Trait, Trait_1, Trait_5, Description
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
-```
-
-```r
 breed_rank_all <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-01/breed_rank.csv')
-```
 
-```
-## Rows: 195 Columns: 11
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr (3): Breed, links, Image
-## dbl (8): 2013 Rank, 2014 Rank, 2015 Rank, 2016 Rank, 2017 Rank, 2018 Rank, 2...
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
-```
-
-```r
 # Tidy Tuesday data for challenge problem
 kids <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-15/kids.csv')
-```
-
-```
-## Rows: 23460 Columns: 6
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr (2): state, variable
-## dbl (4): year, raw, inf_adj, inf_adj_perchild
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 ## Setting up on GitHub!
@@ -148,7 +63,7 @@ Before starting your assignment, you need to get yourself set up on GitHub and m
 
 
 
-## Instructions
+## Instructions 
 
 * Put your name at the top of the document. 
 
@@ -182,13 +97,6 @@ garden_harvest %>%
               values_from = total_harvest_lbs)
 ```
 
-```
-## `summarise()` has grouped output by 'vegetable', 'date'. You can override using
-## the `.groups` argument.
-## `summarise()` has grouped output by 'vegetable'. You can override using the
-## `.groups` argument.
-```
-
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["vegetable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sun"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mon"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Tue"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Wed"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Thu"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Fri"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Sat"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"beans","2":"1.91361016","3":"6.5080382","4":"4.38719380","5":"4.08295624","6":"3.39291018","7":"1.52559704","8":"4.70906832"},{"1":"beets","2":"0.32187452","3":"0.6724091","4":"0.15873264","5":"0.18298346","6":"11.89172028","7":"0.02425082","8":"0.37919464"},{"1":"broccoli","2":"1.25883802","3":"0.8201186","4":"NA","5":"0.70768302","6":"NA","7":"0.16534650","8":"NA"},{"1":"carrots","2":"2.93655384","3":"0.8708249","4":"0.35273920","5":"5.56225626","6":"2.67420406","7":"2.13848140","8":"2.33028334"},{"1":"corn","2":"1.45725382","3":"0.7583893","4":"0.72752460","5":"5.30211110","6":"NA","7":"3.44802568","8":"1.31615814"},{"1":"cucumbers","2":"3.10410496","3":"4.7752069","4":"10.04645334","5":"5.30652034","6":"3.30693000","7":"7.42956940","8":"9.64080326"},{"1":"jalapeño","2":"0.26234978","3":"5.5534378","4":"0.54895038","5":"0.48060716","6":"0.22487124","7":"1.29411194","8":"1.50796008"},{"1":"kale","2":"0.82673250","3":"2.0679336","4":"0.28219136","5":"0.61729360","6":"0.27998674","7":"0.38139926","8":"1.49032312"},{"1":"lettuce","2":"1.46607230","3":"2.4581513","4":"0.91712192","5":"1.18608556","6":"2.45153744","7":"1.80117454","8":"1.31615814"},{"1":"onions","2":"0.26014516","3":"0.5092672","4":"0.70768302","5":"NA","6":"0.60186126","7":"0.07275246","8":"1.91361016"},{"1":"peas","2":"2.05691046","3":"4.6341112","4":"2.06793356","5":"1.08026380","6":"3.39731942","7":"0.93696350","8":"2.85277828"},{"1":"peppers","2":"0.50265336","3":"2.5264945","4":"1.44402610","5":"2.44271896","6":"0.70988764","7":"0.33510224","8":"1.38229674"},{"1":"radish","2":"0.08157094","3":"0.1962112","4":"0.09479866","5":"NA","6":"0.14770954","7":"0.19400656","8":"0.23148510"},{"1":"rutabaga","2":"19.26396956","3":"NA","4":"NA","5":"NA","6":"NA","7":"3.57809826","8":"6.89825598"},{"1":"spinach","2":"0.48722102","3":"0.1477095","4":"0.49603950","5":"0.21384814","6":"0.23368972","7":"0.19621118","8":"0.26014516"},{"1":"strawberries","2":"0.08157094","3":"0.4784025","4":"NA","5":"NA","6":"0.08818480","7":"0.48722102","8":"0.16975574"},{"1":"Swiss chard","2":"1.24781492","3":"1.0736499","4":"0.07054784","5":"0.90830344","6":"2.23107544","7":"0.61729360","8":"0.73413846"},{"1":"tomatoes","2":"75.60964752","3":"11.4926841","4":"48.75076206","5":"58.26590198","6":"34.51773534","7":"85.07628580","8":"35.12621046"},{"1":"zucchini","2":"12.23564100","3":"12.1959578","4":"16.46851140","5":"2.04147812","6":"34.63017096","7":"18.72163304","8":"3.41495638"},{"1":"basil","2":"NA","3":"0.0661386","4":"0.11023100","5":"NA","6":"0.02645544","7":"0.46737944","8":"0.41005932"},{"1":"hot peppers","2":"NA","3":"1.2588380","4":"0.14109568","5":"0.06834322","6":"NA","7":"NA","8":"NA"},{"1":"potatoes","2":"NA","3":"0.9700328","4":"NA","5":"4.57017726","6":"11.85203712","7":"3.74124014","8":"2.80207202"},{"1":"pumpkins","2":"NA","3":"30.1195184","4":"31.85675900","5":"NA","6":"NA","7":"NA","8":"92.68883866"},{"1":"raspberries","2":"NA","3":"0.1300726","4":"0.33510224","5":"NA","6":"0.28880522","7":"0.57099658","8":"0.53351804"},{"1":"squash","2":"NA","3":"24.3345956","4":"18.46810174","5":"NA","6":"NA","7":"NA","8":"56.22221924"},{"1":"cilantro","2":"NA","3":"NA","4":"0.00440924","5":"NA","6":"NA","7":"0.07275246","8":"0.03747854"},{"1":"edamame","2":"NA","3":"NA","4":"1.40213832","5":"NA","6":"NA","7":"NA","8":"4.68922674"},{"1":"chives","2":"NA","3":"NA","4":"NA","5":"0.01763696","6":"NA","7":"NA","8":"NA"},{"1":"kohlrabi","2":"NA","3":"NA","4":"NA","5":"NA","6":"0.42108242","7":"NA","8":"NA"},{"1":"apple","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"0.34392072"},{"1":"asparagus","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"0.04409240"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -205,12 +113,6 @@ garden_harvest %>%
   group_by(variety) %>% 
   summarise(total_harvest_lbs = sum(weight_lbs)) %>% 
   left_join(garden_planting)
-```
-
-```
-## `summarise()` has grouped output by 'vegetable', 'variety', 'weight'. You can
-## override using the `.groups` argument.
-## Joining, by = "variety"
 ```
 
 <div data-pagedtable="false">
@@ -250,13 +152,12 @@ garden_harvest %>%
   summarise(weight_lbs = weight * 0.00220462,
             total_harvest_lbs = sum(weight_lbs)) %>% 
   ungroup() %>% 
-  ggplot(aes(x = total_harvest_lbs, y = fct_reorder(variety, date, min, .desc = TRUE))) +
-  geom_col()
-```
-
-```
-## `summarise()` has grouped output by 'variety', 'date'. You can override using
-## the `.groups` argument.
+  ggplot(aes(x = total_harvest_lbs, 
+             y = fct_reorder(variety, date, min, .desc = TRUE))) +
+  geom_col() +
+  labs(x = "",
+       y = "",
+       title = "Total Harvest (in lbs) for Each Tomato Variety")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
@@ -321,17 +222,6 @@ data_site <-
   "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data.rds" 
 Trips <- readRDS(gzcon(url(data_site)))
 Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv")
-```
-
-```
-## Rows: 347 Columns: 5
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr (1): name
-## dbl (4): lat, long, nbBikes, nbEmptyDocks
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 **NOTE:** The `Trips` data table is a random subset of 10,000 trips from the full quarterly data. Start with this small data table to develop your analysis commands. **When you have this working well, you should access the full data set of more than 600,000 events by removing `-Small` from the name of the `data_site`.**
@@ -412,12 +302,15 @@ Trips %>%
   mutate(hr_day = hour(sdate),
          min_day = ((minute(sdate))/60),
          hr_min = hr_day + min_day,
-         day_of_week = wday(sdate)) %>% 
+         day_of_week = wday(sdate, label = TRUE)) %>% 
   ggplot(aes(x = hr_min)) +
   geom_density(mapping = aes(fill = client), 
                alpha = 0.5, 
                color = NA) +
-  facet_wrap(~ day_of_week)
+  facet_wrap(~ day_of_week) +
+  labs(x = "",
+       y = "",
+       title = "Bike Ridership During Different Days of the Week, Split by Client Type")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
@@ -430,13 +323,16 @@ Trips %>%
   mutate(hr_day = hour(sdate),
          min_day = ((minute(sdate))/60),
          hr_min = hr_day + min_day,
-         day_of_week = wday(sdate)) %>% 
+         day_of_week = wday(sdate, label = TRUE)) %>% 
   ggplot(aes(x = hr_min)) +
   geom_density(mapping = aes(fill = client), 
                alpha = 0.5, 
                color = NA, 
                position = position_stack()) +
-  facet_wrap(~ day_of_week)
+  facet_wrap(~ day_of_week) +
+  labs(x = "",
+       y = "",
+       title = "Bike Ridership During Different Days of the Week, Split by Client Type")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
@@ -458,7 +354,10 @@ Trips %>%
   geom_density(mapping = aes(fill = client), 
                alpha = 0.5, 
                color = NA) +
-  facet_wrap(~ weekend)
+  facet_wrap(~ weekend) +
+  labs(x = "",
+       y = "",
+       title = "Comparing Bike Ridership Between the Week and Weekend, Split by Client Type")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
@@ -477,7 +376,10 @@ Trips %>%
   geom_density(mapping = aes(fill = weekend), 
                alpha = 0.5, 
                color = NA) +
-  facet_wrap(~ client)
+  facet_wrap(~ client) +
+  labs(x = "",
+       y = "",
+       title = "Comparing Bike Ridership Between the Client Types, Split by Week Days")
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
@@ -490,15 +392,41 @@ This graph is useful if your main focus in understanding how casual versus regis
   
 
 ```r
-# not sure how to do this. my guess is that i need to group by "sstation" in the trips dataset, then join the 2 datasets by the station name. then use lat and long to graph them
+Trips %>% 
+  group_by(sstation) %>% 
+  summarise(trips_from_station = n()) %>% 
+  left_join(Stations,
+            by = c("sstation" = "name")) %>% 
+  ggplot(aes(x = lat, 
+             y = long, 
+             color = trips_from_station)) +
+  geom_point() +
+  labs(x = "latitude",
+       y = "longitude",
+       title = "total number of departures from each station")
 ```
+
+![](03_exercises_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
   
   16. Only 14.4% of the trips in our data are carried out by casual users. Create a plot that shows which area(s) have stations with a much higher percentage of departures by casual users. What patterns do you notice? (Again, we'll improve this next week when we learn about maps).
   
 
 ```r
-# using the same code from above, would I then group_by client?
+Trips %>% 
+  group_by(sstation, client) %>% 
+  summarise(trips_from_station = n()) %>% 
+  group_by(sstation) %>% 
+  mutate(rider_percentage = trips_from_station/sum(trips_from_station)) %>%
+  left_join(Stations,
+            by = c("sstation" = "name")) %>% 
+  ggplot(aes(x = lat, y = long, color = rider_percentage)) +
+  geom_point() +
+  labs(x = "latitude",
+       y = "longitude",
+       title = "percent of rides from different stations")
 ```
+
+![](03_exercises_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
   
 **DID YOU REMEMBER TO GO BACK AND CHANGE THIS SET OF EXERCISES TO THE LARGER DATASET? IF NOT, DO THAT NOW.**
 
@@ -509,18 +437,83 @@ In this section, we'll use the data from 2022-02-01 Tidy Tuesday. If you didn't 
   17. The final product of this exercise will be a graph that has breed on the y-axis and the sum of the numeric ratings in the `breed_traits` dataset on the x-axis, with a dot for each rating. First, create a new dataset called `breed_traits_total` that has two variables -- `Breed` and `total_rating`. The `total_rating` variable is the sum of the numeric ratings in the `breed_traits` dataset (we'll use this dataset again in the next problem). Then, create the graph just described. Omit Breeds with a `total_rating` of 0 and order the Breeds from highest to lowest ranked. You may want to adjust the `fig.height` and `fig.width` arguments inside the code chunk options (eg. `{r, fig.height=8, fig.width=4}`) so you can see things more clearly - check this after you knit the file to assure it looks like what you expected.
 
 
+```r
+breed_traits_total <- breed_traits %>% 
+  select(-`Coat Type`, -`Coat Length`) %>% 
+  group_by(Breed) %>% 
+  pivot_longer(!Breed,
+               names_to = "traits",
+               values_to = "rating") %>% 
+  group_by(Breed) %>% 
+  summarise(total_rating = sum(rating)) 
+
+
+breed_traits_total %>% 
+  filter(total_rating > 0) %>% 
+  ggplot(aes(x = total_rating, y = fct_reorder(Breed, total_rating))) +
+  geom_point() +
+  labs(x = "Total Rating",
+       y = "",
+       title = "Total Rating of Different Dog Breeds")
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
   18. The final product of this exercise will be a graph with the top-20 dogs in total ratings (from previous problem) on the y-axis, year on the x-axis, and points colored by each breed's ranking for that year (from the `breed_rank_all` dataset). The points within each breed will be connected by a line, and the breeds should be arranged from the highest median rank to lowest median rank ("highest" is actually the smallest numer, eg. 1 = best). After you're finished, think of AT LEAST one thing you could you do to make this graph better. HINTS: 1. Start with the `breed_rank_all` dataset and pivot it so year is a variable. 2. Use the `separate()` function to get year alone, and there's an extra argument in that function that can make it numeric. 3. For both datasets used, you'll need to `str_squish()` Breed before joining. 
   
 
+```r
+breed_rank_all %>% 
+  pivot_longer(cols = starts_with("20"),
+               names_to = "year",
+               values_to = "total_ranking") %>% 
+  separate(year, into = c("year", "rank"), convert = TRUE) %>% 
+  mutate(breed_str = str_squish(Breed)) %>% 
+  inner_join(breed_traits_total %>%
+               mutate(breed_str = str_squish(Breed)) %>% 
+               slice_max(n = 20, order_by = total_rating),
+             by = "breed_str") %>% 
+  ggplot(aes(x = year, y = fct_rev(fct_reorder(breed_str, total_ranking, median)), color = total_ranking)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "",
+       y = "",
+       title = "Top 20 Dog Breeds by Total Ranking")
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+One thing that could make this graph more easily readible is if the color scale had a wider spectrum so that you could distinguish different rankings more easily.   
+  
   
   19. Create your own! Requirements: use a `join` or `pivot` function (or both, if you'd like), a `str_XXX()` function, and a `fct_XXX()` function to create a graph using any of the dog datasets. One suggestion is to try to improve the graph you created for the Tidy Tuesday assignment. If you want an extra challenge, find a way to use the dog images in the `breed_rank_all` file - check out the `ggimage` library and [this resource](https://wilkelab.org/ggtext/) for putting images as labels.
   
 
   
+
+```r
+breed_final <- breed_rank_all %>% 
+  select(Breed, `2020 Rank`) %>% 
+  inner_join(breed_traits ,
+            by = "Breed") %>% 
+  select(Breed, `2020 Rank`, `Openness To Strangers`) %>% 
+  mutate(breed_length = str_length(Breed))
+
+breed_final %>% 
+  ggplot(aes(x =  breed_length, y = `2020 Rank`, color = `Openness To Strangers`)) +
+  geom_point() +
+  geom_jitter() +
+  geom_smooth(method = lm)
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+  
+It appears that the 2020 ranking is, contrary to popular belief, not dependent on length of the breed name and rating of openness to strangers. Who woulda thought?? :)
+  
 ## GitHub link
 
   20. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 03_exercises.Rmd, provide a link to the 03_exercises.md file, which is the one that will be most readable on GitHub.
+  
+<https://github.com/rachelpercy/2022_02_exercise_3>
 
 ## Challenge problem! 
 
@@ -531,8 +524,28 @@ This problem uses the data from the Tidy Tuesday competition this week, `kids`. 
 
 
 ```r
+kids %>% 
+  pivot_wider(id_cols = year, 
+              names_from = year,
+              values_from = inf_adj) %>% 
+  group_by(state, year) %>% 
+  mutate(spending = inf_adj) %>% 
+  ggplot(mapping = aes(x = state)) +
+  geom_point(y = 1997) +
+  geom_point(y = 2016) +
+  geom_line() +
+  facet_geo(~ state)
+```
+
+```
+## Error in `stop_subscript()`:
+## ! Can't subset columns that don't exist.
+## x Column `year` doesn't exist.
+```
+
+```r
+# not sure how to finish this one
 #![](kids_data_karamanis.jpeg)
-# not supposed to be in code chunk. move out later.
 ```
 
 **DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?**

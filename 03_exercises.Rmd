@@ -63,7 +63,7 @@ Before starting your assignment, you need to get yourself set up on GitHub and m
 
 
 
-## Instructions
+## Instructions 
 
 * Put your name at the top of the document. 
 
@@ -321,7 +321,9 @@ Trips %>%
   summarise(trips_from_station = n()) %>% 
   left_join(Stations,
             by = c("sstation" = "name")) %>% 
-  ggplot(aes(x = lat, y = long, color = trips_from_station)) +
+  ggplot(aes(x = lat, 
+             y = long, 
+             color = trips_from_station)) +
   geom_point()
   
 ```
@@ -364,8 +366,6 @@ breed_traits_total %>%
   ggplot(aes(x = total_rating, y = fct_reorder(Breed, total_rating))) +
   geom_point()
 
-
-
 ```
 
   18. The final product of this exercise will be a graph with the top-20 dogs in total ratings (from previous problem) on the y-axis, year on the x-axis, and points colored by each breed's ranking for that year (from the `breed_rank_all` dataset). The points within each breed will be connected by a line, and the breeds should be arranged from the highest median rank to lowest median rank ("highest" is actually the smallest numer, eg. 1 = best). After you're finished, think of AT LEAST one thing you could you do to make this graph better. HINTS: 1. Start with the `breed_rank_all` dataset and pivot it so year is a variable. 2. Use the `separate()` function to get year alone, and there's an extra argument in that function that can make it numeric. 3. For both datasets used, you'll need to `str_squish()` Breed before joining. 
@@ -374,21 +374,44 @@ breed_traits_total %>%
 breed_rank_all %>% 
   pivot_longer(cols = starts_with("20"),
                names_to = "year",
-               values_to = "total ranking") %>% 
+               values_to = "total_ranking") %>% 
   separate(year, into = c("year", "rank"), convert = TRUE) %>% 
-  str_squish()
-  inner_join(breed_traits_total %>% 
+  mutate(breed_str = str_squish(Breed)) %>% 
+  inner_join(breed_traits_total %>%
+               mutate(breed_str = str_squish(Breed)) %>% 
                slice_max(n = 20, order_by = total_rating),
-             by = "")
-  ggplot(aes(x = year, y = Breed)) +
-  geom_point()
+             by = "breed_str") %>% 
+  ggplot(aes(x = year, y = fct_rev(fct_reorder(breed_str, total_ranking, median)), color = total_ranking)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "",
+       y = "",
+       title = "Top 20 Dog Breeds by Total Ranking")
+
 ```
+One thing that could make this graph more easily readible is if the color scale had a wider spectrum so that you could distinguish different rankings more easily.   
+  
   
   19. Create your own! Requirements: use a `join` or `pivot` function (or both, if you'd like), a `str_XXX()` function, and a `fct_XXX()` function to create a graph using any of the dog datasets. One suggestion is to try to improve the graph you created for the Tidy Tuesday assignment. If you want an extra challenge, find a way to use the dog images in the `breed_rank_all` file - check out the `ggimage` library and [this resource](https://wilkelab.org/ggtext/) for putting images as labels.
   
-```{r}
 
+  
+```{r}
+breed_final <- breed_rank_all %>% 
+  select(Breed, `2020 Rank`) %>% 
+  inner_join(breed_traits ,
+            by = "Breed") %>% 
+  select(Breed, `2020 Rank`, `Openness To Strangers`) %>% 
+  mutate(breed_length = str_length(Breed))
+
+breed_final %>% 
+  ggplot(aes(x =  breed_length, y = `2020 Rank`, color = `Openness To Strangers`)) +
+  geom_point() +
+  geom_jitter() +
+  geom_smooth(method = lm)
 ```
+  
+It appears that the 2020 ranking is, contrary to popular belief, not dependent on length of the breed name and rating of openness to strangers. Who woulda thought?? :)
   
 ## GitHub link
 
